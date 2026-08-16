@@ -1581,3 +1581,7 @@ if __name__ == "__main__":
     
     # Listen on 0.0.0.0 for Railway compatibility
     app.run(host='0.0.0.0', port=port, debug=debug_mode)
+
+# Initialize database when app context is available
+with app.app_context():
+    db.create_all()
