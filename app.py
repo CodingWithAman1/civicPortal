@@ -1573,5 +1573,11 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    
     # Use debug=False for production
-    app.run(debug=os.environ.get('FLASK_DEBUG', 'False') == 'True')
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False') == 'True'
+    
+    # Listen on 0.0.0.0 for Railway compatibility
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
