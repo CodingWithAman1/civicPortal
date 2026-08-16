@@ -1,0 +1,677 @@
+body {
+
+    background: #f4f7fb;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #212529;
+
+    min-height: 100vh;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+
+    padding: 16px 0;
+
+    background: linear-gradient(
+        90deg,
+        #0759d6,
+        #0d6efd
+    ) !important;
+
+}
+
+.navbar-brand {
+
+    font-size: 1.35rem;
+
+    letter-spacing: .3px;
+
+}
+
+.navbar-brand i {
+
+    font-size: 1.4rem;
+
+}
+
+.navbar-text {
+
+    font-size: .9rem;
+
+    opacity: .9;
+
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255,255,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #0759d6,
+            #0d6efd,
+            #4b9bff
+        );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 110px 20px 120px;
+
+    overflow: hidden;
+
+}
+
+
+/* Decorative circles */
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+
+    height: 280px;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: 50%;
+
+    top: -100px;
+
+    left: -80px;
+
+}
+
+.hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+
+    height: 350px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 50%;
+
+    bottom: -180px;
+
+    right: -100px;
+
+}
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 850px;
+
+    margin: auto;
+
+}
+
+.hero h1 {
+
+    letter-spacing: -1px;
+
+    line-height: 1.1;
+
+}
+
+.hero p {
+
+    max-width: 700px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    opacity: .95;
+
+}
+
+.hero .badge {
+
+    border-radius: 50px;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================
+   ROLE SECTION
+========================= */
+
+.container.my-5 {
+
+    margin-top: 70px !important;
+
+    margin-bottom: 70px !important;
+
+}
+
+.container.my-5 h2 {
+
+    font-size: 2.2rem;
+
+}
+
+.container.my-5 > .text-center p {
+
+    max-width: 600px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+}
+
+
+/* =========================
+   ROLE CARDS
+========================= */
+
+.role-card {
+
+    border: 1px solid rgba(0,0,0,.05);
+
+    border-radius: 22px;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+
+    background: #ffffff;
+
+    height: 100%;
+
+    overflow: hidden;
+
+}
+
+.role-card:hover {
+
+    transform: translateY(-10px);
+
+    box-shadow: 0 20px 40px rgba(0,0,0,.12) !important;
+
+}
+
+.role-card .card-body {
+
+    padding: 45px 35px;
+
+}
+
+.role-card h3 {
+
+    font-weight: 700;
+
+}
+
+.role-card p {
+
+    min-height: 72px;
+
+    line-height: 1.7;
+
+    font-size: .95rem;
+
+}
+
+
+/* =========================
+   ICONS
+========================= */
+
+.icon-wrapper {
+
+    width: 95px;
+
+    height: 95px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: auto;
+
+}
+
+.icon-wrapper i {
+
+    font-size: 3.3rem;
+
+}
+
+
+/* Citizen */
+
+.citizen-icon {
+
+    background: rgba(13,110,253,.1);
+
+    color: #0d6efd;
+
+}
+
+
+/* NGO */
+
+.ngo-icon {
+
+    background: rgba(25,135,84,.1);
+
+    color: #198754;
+
+}
+
+
+/* Municipal */
+
+.municipal-icon {
+
+    background: rgba(33,37,41,.08);
+
+    color: #212529;
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.role-card .btn {
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: .25s ease;
+
+}
+
+.role-card .btn:hover {
+
+    transform: translateX(3px);
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    margin-top: 80px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+}
+
+footer .fw-bold {
+
+    font-size: 1.1rem;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .hero {
+
+        padding: 80px 20px 90px;
+
+    }
+
+    .hero h1 {
+
+        font-size: 2.5rem;
+
+    }
+
+    .hero p {
+
+        font-size: 1rem;
+
+    }
+
+    .container.my-5 {
+
+        margin-top: 50px !important;
+
+        margin-bottom: 50px !important;
+
+    }
+
+    .container.my-5 h2 {
+
+        font-size: 1.8rem;
+
+    }
+
+    .role-card .card-body {
+
+        padding: 35px 25px;
+
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .hero {
+
+        padding: 70px 18px 80px;
+
+    }
+
+    .hero h1 {
+
+        font-size: 2.1rem;
+
+    }
+
+    .hero .lead {
+
+        font-size: .95rem;
+
+    }
+
+    .icon-wrapper {
+
+        width: 80px;
+
+        height: 80px;
+
+    }
+
+    .icon-wrapper i {
+
+        font-size: 2.7rem;
+
+    }
+
+}
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+/* =========================
+   QUESTION BUTTON
+========================= */
+
+.question-btn {
+
+    width: 52px;
+
+    height: 52px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 1.3rem;
+
+    transition: .3s ease;
+
+}
+
+.question-btn:hover {
+
+    transform: rotate(10deg) scale(1.08);
+
+}
+
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.how-it-works {
+
+    background: #ffffff;
+
+    padding: 90px 20px;
+
+    border-top: 1px solid rgba(0,0,0,.04);
+
+    border-bottom: 1px solid rgba(0,0,0,.04);
+
+}
+
+.how-it-works h2 {
+
+    font-size: 2.3rem;
+
+}
+
+.how-it-works > .container > .text-center p {
+
+    max-width: 650px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+}
+
+
+/* =========================
+   HOW CARDS
+========================= */
+
+.how-card {
+
+    position: relative;
+
+    background: #f8faff;
+
+    border: 1px solid #e8eef7;
+
+    border-radius: 20px;
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    transition: .3s ease;
+
+}
+
+.how-card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.09);
+
+    border-color: rgba(13,110,253,.2);
+
+}
+
+
+/* Step number */
+
+.step-number {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 22px;
+
+    font-size: .8rem;
+
+    font-weight: 700;
+
+    color: #0d6efd;
+
+    background: rgba(13,110,253,.08);
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+}
+
+
+/* Icons */
+
+.how-icon {
+
+    width: 80px;
+
+    height: 80px;
+
+    margin: 15px auto 25px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(13,110,253,.1);
+
+    color: #0d6efd;
+
+}
+
+.how-icon i {
+
+    font-size: 2.4rem;
+
+}
+
+.how-card h4 {
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+}
+
+.how-card p {
+
+    color: #6c757d;
+
+    line-height: 1.7;
+
+    margin-bottom: 0;
+
+}
+
+
+/* =========================
+   HOW IT WORKS CTA
+========================= */
+
+.how-start {
+
+    margin-top: 65px;
+
+    padding-top: 50px;
+
+    border-top: 1px solid #e9ecef;
+
+}
+
+.how-start h3 {
+
+    font-size: 1.8rem;
+
+}
+
+.how-start p {
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .how-it-works {
+
+        padding: 65px 20px;
+
+    }
+
+    .how-it-works h2 {
+
+        font-size: 1.9rem;
+
+    }
+
+    .how-card {
+
+        padding: 35px 25px;
+
+    }
+
+    .how-start {
+
+        margin-top: 45px;
+
+    }
+
+}

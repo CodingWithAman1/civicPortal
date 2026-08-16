@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>My Complaints</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+
+<div class="container">
+
+<a class="navbar-brand fw-bold" href="{{ url_for('dashboard') }}">
+
+🏙 CivicConnect
+
+</a>
+
+<div>
+
+<span class="text-white me-3">
+
+<i class="bi bi-person-circle"></i>
+
+{{ username }}
+
+</span>
+
+<a href="{{ url_for('dashboard') }}" class="btn btn-light btn-sm">
+
+Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<div class="container py-4">
+
+<h2 class="mb-4">
+
+<i class="bi bi-folder2-open"></i>
+
+My Complaints
+
+</h2>
+
+<!-- Statistics -->
+<div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <div class="card text-center border-warning shadow-sm">
+            <div class="card-body">
+                <h6>Pending</h6>
+                <h2 class="text-warning mb-0">{{ pending }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center border-primary shadow-sm">
+            <div class="card-body">
+                <h6>In Progress</h6>
+                <h2 class="text-primary mb-0">{{ in_progress }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center border-success shadow-sm">
+            <div class="card-body">
+                <h6>Completed</h6>
+                <h2 class="text-success mb-0">{{ resolved }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% if complaints %}
+
+<div class="row">
+
+{% for complaint in complaints %}
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow h-100">
+
+{% if complaint.image %}
+
+<img
+src="{{ url_for('static', filename='uploads/' + complaint.image) }}"
+class="card-img-top"
+style="height:250px;object-fit:cover;">
+
+{% endif %}
+
+<div class="card-body">
+
+<h5 class="card-title">
+
+{{ complaint.title }}
+
+</h5>
+
+<p class="text-muted">
+
+{{ complaint.category }}
+
+</p>
+
+<p>
+
+{{ complaint.description }}
+
+</p>
+
+<p>
+
+<b>Location:</b>
+
+{{ complaint.location }}
+
+</p>
+
+{% if complaint.status=="Pending" %}
+
+<span class="badge bg-warning">
+
+Pending
+
+</span>
+
+{% elif complaint.status=="In Progress" %}
+
+<span class="badge bg-primary">
+
+In Progress
+
+</span>
+
+{% elif complaint.status=="Completed" %}
+
+<span class="badge bg-success">
+
+Completed
+
+</span>
+
+{% if complaint.verified %}
+
+<span class="badge bg-info text-dark">
+
+<i class="bi bi-patch-check-fill"></i>
+Verified by Municipal Authority
+
+</span>
+
+{% endif %}
+
+{% else %}
+
+<span class="badge bg-dark">
+
+{{ complaint.status }}
+
+</span>
+
+{% endif %}
+
+</div>
+
+<div class="card-footer text-muted">
+
+Complaint ID : {{ complaint.id }}
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info text-center">
+
+<h4>No Complaints Yet</h4>
+
+<p>
+
+Click below to report your first issue.
+
+</p>
+
+<a href="{{ url_for('report') }}" class="btn btn-danger">
+
+Report Issue
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

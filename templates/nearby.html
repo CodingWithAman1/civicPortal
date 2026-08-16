@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Issues | CivicConnect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-primary shadow">
+    <div class="container">
+
+        <a href="{{ url_for('dashboard') }}" class="navbar-brand fw-bold">
+            <i class="bi bi-buildings-fill"></i>
+            CivicConnect
+        </a>
+
+        <div>
+            <span class="text-white me-3">
+                <i class="bi bi-person-circle"></i>
+                {{ username }}
+            </span>
+
+            <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-sm">
+                Dashboard
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h2 class="fw-bold">
+            <i class="bi bi-geo-alt-fill text-danger"></i>
+            Nearby Issues
+        </h2>
+
+        <p class="text-muted">
+            Find complaints within 20 km of your current location.
+        </p>
+
+        <button class="btn btn-primary btn-lg" onclick="getLocation()">
+            <i class="bi bi-crosshair"></i>
+            Use My Current Location
+        </button>
+
+    </div>
+
+    <form id="locationForm" method="POST">
+
+        <input type="hidden" id="latitude" name="latitude">
+
+        <input type="hidden" id="longitude" name="longitude">
+
+    </form>
+
+    {% if complaints %}
+
+    <div class="row">
+
+        {% for complaint in complaints %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                {% if complaint.image %}
+                <img src="{{ url_for('static', filename='uploads/' + complaint.image) }}"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;">
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5>{{ complaint.title }}</h5>
+
+                    <span class="badge bg-secondary">
+                        {{ complaint.category }}
+                    </span>
+
+                    <hr>
+
+                    <p>
+                        {{ complaint.description }}
+                    </p>
+
+                    <p>
+                        <i class="bi bi-geo-alt"></i>
+
+                        {{ complaint.location }}
+                    </p>
+
+                    <p>
+
+                        <i class="bi bi-signpost"></i>
+
+                        <strong>{{ complaint.distance }} km away</strong>
+
+                    </p>
+
+                    <p>
+
+                        Status :
+
+                        {% if complaint.status=="Pending" %}
+
+                        <span class="badge bg-warning text-dark">
+                            Pending
+                        </span>
+
+                        {% elif complaint.status=="In Progress" %}
+
+                        <span class="badge bg-primary">
+                            In Progress
+                        </span>
+
+                        {% elif complaint.status=="Completed" %}
+
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+
+                        {% if complaint.verified %}
+                        <span class="badge bg-info text-dark">
+                            <i class="bi bi-patch-check-fill"></i>
+                            Verified
+                        </span>
+                        {% endif %}
+
+                        {% else %}
+
+                        <span class="badge bg-dark">
+                            {{ complaint.status }}
+                        </span>
+
+                        {% endif %}
+                        {% if complaint.assigned_role %}
+
+<p class="mt-2">
+
+    <strong>Assigned To:</strong>
+
+    {{ complaint.assigned_role|capitalize }}
+
+</p>
+
+{% endif %}
+                    </p>
+
+                </div>
+
+                <div class="card-footer bg-white">
+
+    <a href="https://www.google.com/maps?q={{ complaint.latitude }},{{ complaint.longitude }}"
+       target="_blank"
+       class="btn btn-outline-primary w-100 mb-2">
+
+        <i class="bi bi-map"></i>
+        View on Google Maps
+
+    </a>
+
+    {% if complaint.status == "Pending" %}
+
+    <a href="{{ url_for('take_issue', complaint_id=complaint.id) }}"
+       class="btn btn-success w-100">
+
+        <i class="bi bi-check-circle"></i>
+        Take This Issue
+
+    </a>
+
+    {% elif complaint.status == "In Progress" %}
+
+        {% if complaint.assigned_to == session["user_id"] %}
+
+        <a href="{{ url_for('complete_issue', complaint_id=complaint.id) }}"
+           class="btn btn-warning w-100">
+
+            <i class="bi bi-upload"></i>
+
+            Mark as Complete
+
+        </a>
+
+        {% else %}
+
+        <button class="btn btn-primary w-100" disabled>
+
+            <i class="bi bi-person-check-fill"></i>
+
+            Assigned to {{ complaint.assigned_role|capitalize }}
+
+        </button>
+
+        {% endif %}
+
+    {% elif complaint.status == "Completed" %}
+
+        <button class="btn btn-success w-100" disabled>
+
+            Completed
+
+        </button>
+
+    {% endif %}
+
+</div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+function getLocation(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position){
+
+                document.getElementById("latitude").value =
+                    position.coords.latitude;
+
+                document.getElementById("longitude").value =
+                    position.coords.longitude;
+
+                document.getElementById("locationForm").submit();
+
+            },
+
+            function(){
+
+                alert("Unable to access your location.");
+
+            }
+
+        );
+
+    }
+    else{
+
+        alert("Geolocation is not supported.");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

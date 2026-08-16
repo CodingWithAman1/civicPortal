@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Issue | CivicConnect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+    <style>
+
+        body {
+            background: #f4f7fb;
+        }
+
+        .report-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #dc3545, #b02a37);
+            padding: 22px 25px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 11px 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .12);
+        }
+
+        /* AI IMAGE SECTION */
+
+        .ai-box {
+            background: #f8f9ff;
+            border: 1px solid #e1e5ff;
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .ai-box h5 {
+            font-weight: 700;
+        }
+
+        #preview {
+            display: none;
+            max-height: 220px;
+            max-width: 100%;
+            border-radius: 12px;
+            object-fit: contain;
+            border: 1px solid #dee2e6;
+            padding: 4px;
+            background: white;
+        }
+
+        #analyzeBtn {
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        #aiStatus {
+            font-size: .9rem;
+        }
+
+        /* MAP */
+
+        #map {
+            height: 400px;
+            border-radius: 14px;
+            border: 1px solid #dee2e6;
+        }
+
+        .location-help {
+            font-size: .85rem;
+            color: #6c757d;
+        }
+
+        /* SUBMIT */
+
+        .submit-area {
+            border-top: 1px solid #e9ecef;
+            padding-top: 25px;
+        }
+
+        /* AI FIELD HIGHLIGHT */
+
+        .ai-filled {
+            animation: highlightField 1.2s ease;
+        }
+
+        @keyframes highlightField {
+
+            0% {
+                background-color: #e8f5e9;
+            }
+
+            100% {
+                background-color: white;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            #map {
+                height: 320px;
+            }
+
+            .ai-box {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container py-5">
+
+    <div class="card shadow report-card">
+
+
+        <!-- HEADER -->
+
+        <div class="card-header text-white">
+
+            <h3>
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                Report a Civic Issue
+
+            </h3>
+
+            <small class="opacity-75">
+
+                Help your community by reporting problems around you.
+
+            </small>
+
+        </div>
+
+
+        <div class="card-body p-4 p-md-5">
+
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+
+                <!-- =====================================
+                     IMAGE + AI SECTION
+                ====================================== -->
+
+                <div class="ai-box mb-5">
+
+
+                    <div class="text-center mb-4">
+
+                        <h5>
+
+                            <i class="bi bi-camera-fill text-primary me-2"></i>
+
+                            Upload Issue Image
+
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+
+                            Upload a photo of the civic issue
+                            and let AI identify the problem.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="row align-items-center g-4">
+
+
+                        <!-- IMAGE UPLOAD -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+
+                                Select Image
+
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control"
+                                id="image"
+                                name="image"
+                                accept="image/*"
+                                onchange="previewImage(event)">
+
+                            <div class="small text-muted mt-2">
+
+                                <i class="bi bi-info-circle me-1"></i>
+
+                                JPG, JPEG and PNG images are supported.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- IMAGE PREVIEW -->
+
+                        <div class="col-md-6 text-center">
+
+                            <img
+                                id="preview"
+                                class="img-fluid">
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AI BUTTON -->
+
+                    <div class="text-center mt-4">
+
+                        <button
+                            type="button"
+                            class="btn btn-primary px-4"
+                            id="analyzeBtn">
+
+                            <i class="bi bi-stars me-2"></i>
+
+                            Analyze Image with AI
+
+                        </button>
+
+
+                        <div
+                            id="aiStatus"
+                            class="mt-3">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-center small text-muted mt-3">
+
+                        <i class="bi bi-magic me-1"></i>
+
+                        AI will suggest the issue title,
+                        category and description.
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     ISSUE DETAILS
+                ====================================== -->
+
+                <div class="row g-4">
+
+
+                    <!-- LEFT COLUMN -->
+
+                    <div class="col-md-6">
+
+
+                        <!-- TITLE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Issue Title
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                placeholder="Issue title"
+                                required>
+
+                        </div>
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Category
+
+                            </label>
+
+                            <select
+                                name="category"
+                                id="category"
+                                class="form-select"
+                                required>
+
+                                <option value="">
+                                    Select category
+                                </option>
+
+                                <option value="Garbage">
+                                    Garbage
+                                </option>
+
+                                <option value="Pothole">
+                                    Pothole
+                                </option>
+
+                                <option value="Street Light">
+                                    Street Light
+                                </option>
+
+                                <option value="Water Leakage">
+                                    Water Leakage
+                                </option>
+
+                                <option value="Sewage">
+                                    Sewage
+                                </option>
+
+                                <option value="Illegal Dumping">
+                                    Illegal Dumping
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Description
+
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="6"
+                                placeholder="Describe the issue..."
+                                required></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RIGHT COLUMN -->
+
+                    <div class="col-md-6">
+
+
+                        <!-- LOCATION -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                <i class="bi bi-geo-alt-fill me-1"></i>
+
+                                Location
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    class="form-control"
+                                    placeholder="Click map or use GPS"
+                                    required>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    id="gpsBtn"
+                                    onclick="getLocation()">
+
+                                    <i class="bi bi-crosshair me-1"></i>
+
+                                    GPS
+
+                                </button>
+
+                            </div>
+
+                            <div class="location-help mt-2">
+
+                                <i class="bi bi-info-circle me-1"></i>
+
+                                Use GPS or click the map to select
+                                the exact location.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- HIDDEN COORDINATES -->
+
+                        <input
+                            type="hidden"
+                            id="latitude"
+                            name="latitude">
+
+                        <input
+                            type="hidden"
+                            id="longitude"
+                            name="longitude">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     MAP
+                ====================================== -->
+
+                <div class="mb-4 mt-3">
+
+                    <label class="form-label">
+
+                        <i class="bi bi-map me-1"></i>
+
+                        Choose Exact Location
+
+                    </label>
+
+                    <div id="map"></div>
+
+                </div>
+
+
+                <!-- =====================================
+                     SUBMIT
+                ====================================== -->
+
+                <div class="submit-area d-flex justify-content-end gap-2">
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="btn btn-secondary">
+
+                        <i class="bi bi-x-lg me-1"></i>
+
+                        Cancel
+
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger px-4">
+
+                        <i class="bi bi-send-fill me-1"></i>
+
+                        Submit Complaint
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<script>
+
+/* =========================================
+   MAP
+========================================= */
+
+var map = L.map('map').setView(
+    [20.5937, 78.9629],
+    5
+);
+
+
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        attribution: '© OpenStreetMap'
+    }
+).addTo(map);
+
+
+var marker;
+
+
+/* =========================================
+   SET MARKER
+========================================= */
+
+function setMarker(lat, lng) {
+
+    if (marker) {
+        map.removeLayer(marker);
+    }
+
+    marker = L.marker([lat, lng]).addTo(map);
+
+    map.setView([lat, lng], 16);
+
+    document.getElementById("latitude").value = lat;
+
+    document.getElementById("longitude").value = lng;
+
+    document.getElementById("location").value =
+        lat.toFixed(6) + ", " + lng.toFixed(6);
+}
+
+
+/* =========================================
+   MAP CLICK
+========================================= */
+
+map.on("click", function(e) {
+
+    setMarker(
+        e.latlng.lat,
+        e.latlng.lng
+    );
+
+});
+
+
+/* =========================================
+   GPS
+========================================= */
+
+function getLocation() {
+
+    if (!navigator.geolocation) {
+
+        alert(
+            "Geolocation is not supported by your browser."
+        );
+
+        return;
+    }
+
+
+    const gpsButton =
+        document.getElementById("gpsBtn");
+
+
+    gpsButton.disabled = true;
+
+    gpsButton.innerHTML = `
+        <span class="spinner-border spinner-border-sm me-1"></span>
+        Locating...
+    `;
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            setMarker(
+                position.coords.latitude,
+                position.coords.longitude
+            );
+
+            gpsButton.disabled = false;
+
+            gpsButton.innerHTML = `
+                <i class="bi bi-crosshair me-1"></i>
+                GPS
+            `;
+
+        },
+
+        function() {
+
+            alert(
+                "Unable to fetch your location. Please select it manually on the map."
+            );
+
+            gpsButton.disabled = false;
+
+            gpsButton.innerHTML = `
+                <i class="bi bi-crosshair me-1"></i>
+                GPS
+            `;
+
+        }
+
+    );
+
+}
+
+
+/* =========================================
+   IMAGE PREVIEW
+========================================= */
+
+function previewImage(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function() {
+
+        const img =
+            document.getElementById("preview");
+
+        img.src =
+            reader.result;
+
+        img.style.display =
+            "block";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================================
+   GEMINI AI
+========================================= */
+
+const imageInput =
+    document.getElementById("image");
+
+const analyzeBtn =
+    document.getElementById("analyzeBtn");
+
+const aiStatus =
+    document.getElementById("aiStatus");
+
+
+analyzeBtn.addEventListener(
+    "click",
+    async function() {
+
+        const file =
+            imageInput.files[0];
+
+
+        if (!file) {
+
+            alert(
+                "Please upload an image first."
+            );
+
+            return;
+        }
+
+
+        /* Loading */
+
+        analyzeBtn.disabled = true;
+
+        analyzeBtn.innerHTML = `
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Analyzing...
+        `;
+
+
+        aiStatus.innerHTML = `
+            <span class="text-primary">
+                <i class="bi bi-stars me-1"></i>
+                Gemini is analyzing the image...
+            </span>
+        `;
+
+
+        try {
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "image",
+                file
+            );
+
+
+            const response =
+                await fetch(
+                    "/analyze_issue",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!result.success) {
+
+                throw new Error(
+                    result.error ||
+                    "AI analysis failed."
+                );
+
+            }
+
+
+            const data =
+                result.data;
+
+
+            /* =================================
+               TITLE
+            ================================= */
+
+            const title =
+                document.getElementById("title");
+
+            title.value =
+                data.title || "";
+
+            title.classList.add("ai-filled");
+
+
+            /* =================================
+               DESCRIPTION
+            ================================= */
+
+            const description =
+                document.getElementById("description");
+
+            description.value =
+                data.description || "";
+
+            description.classList.add("ai-filled");
+
+
+            /* =================================
+               CATEGORY
+            ================================= */
+
+            const category =
+                document.getElementById("category");
+
+
+            const aiCategory =
+                (data.category || "")
+                .trim()
+                .toLowerCase();
+
+
+            const categoryMap = {
+
+                "garbage": "Garbage",
+
+                "pothole": "Pothole",
+
+                "potholes": "Pothole",
+
+                "street light": "Street Light",
+
+                "streetlight": "Street Light",
+
+                "streetlights": "Street Light",
+
+                "water leakage": "Water Leakage",
+
+                "water leak": "Water Leakage",
+
+                "water": "Water Leakage",
+
+                "sewage": "Sewage",
+
+                "sewer": "Sewage",
+
+                "illegal dumping": "Illegal Dumping",
+
+                "dumping": "Illegal Dumping"
+
+            };
+
+
+            if (categoryMap[aiCategory]) {
+
+                category.value =
+                    categoryMap[aiCategory];
+
+            } else {
+
+                category.value =
+                    "Other";
+
+            }
+
+
+            category.classList.add(
+                "ai-filled"
+            );
+
+
+            /* =================================
+               SUCCESS
+            ================================= */
+
+            aiStatus.innerHTML = `
+
+                <span class="text-success fw-semibold">
+
+                    <i class="bi bi-check-circle-fill me-1"></i>
+
+                    AI analysis complete.
+                    Please review the information.
+
+                </span>
+
+            `;
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "AI Error:",
+                error
+            );
+
+
+            aiStatus.innerHTML = `
+
+                <span class="text-danger">
+
+                    <i class="bi bi-exclamation-circle-fill me-1"></i>
+
+                    AI analysis failed.
+                    Please fill the form manually.
+
+                </span>
+
+            `;
+
+        }
+
+
+        finally {
+
+            analyzeBtn.disabled = false;
+
+            analyzeBtn.innerHTML = `
+
+                <i class="bi bi-stars me-2"></i>
+
+                Analyze Image with AI
+
+            `;
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>

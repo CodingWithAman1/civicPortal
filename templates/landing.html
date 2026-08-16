@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>CivicConnect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+
+            <i class="bi bi-buildings-fill"></i>
+
+            CivicConnect
+
+        </a>
+
+        <span class="navbar-text text-white d-none d-md-block">
+
+            Building Better Communities
+
+        </span>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="badge bg-light text-primary px-3 py-2 mb-3">
+
+                <i class="bi bi-people-fill me-1"></i>
+
+                Smart Civic Platform
+
+            </span>
+
+            <h1 class="display-3 fw-bold">
+
+                Building Smarter Cities Together
+
+            </h1>
+
+            <p class="lead mt-3">
+
+                One platform connecting
+
+                <strong>Citizens</strong>,
+
+                <strong>NGOs</strong> and
+
+                <strong>Municipal Authorities</strong>.
+
+            </p>
+
+
+            <!-- HERO BUTTONS -->
+
+            <div class="mt-4 d-flex justify-content-center gap-3">
+
+                <a href="#roles"
+                   class="btn btn-light btn-lg px-4 fw-semibold">
+
+                    Get Started
+
+                    <i class="bi bi-arrow-down-circle ms-2"></i>
+
+                </a>
+
+
+                <a href="#how-it-works"
+                   class="btn btn-outline-light btn-lg question-btn"
+                   title="How CivicConnect works">
+
+                    <i class="bi bi-question-lg"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="text-primary fw-semibold text-uppercase small">
+
+                Simple. Connected. Effective.
+
+            </span>
+
+            <h2 class="fw-bold mt-2">
+
+                How It Works
+
+            </h2>
+
+            <p class="text-muted">
+
+                CivicConnect brings citizens, NGOs and authorities
+                together to solve civic problems faster.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 align-items-stretch">
+
+
+            <!-- STEP 1 -->
+
+            <div class="col-lg-4">
+
+                <div class="how-card h-100">
+
+                    <div class="step-number">
+
+                        01
+
+                    </div>
+
+                    <div class="how-icon">
+
+                        <i class="bi bi-person-check-fill"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Choose Your Role
+
+                    </h4>
+
+                    <p>
+
+                        Start by selecting whether you are a
+                        Citizen, NGO or Municipal Authority.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="col-lg-4">
+
+                <div class="how-card h-100">
+
+                    <div class="step-number">
+
+                        02
+
+                    </div>
+
+                    <div class="how-icon">
+
+                        <i class="bi bi-megaphone-fill"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Connect & Take Action
+
+                    </h4>
+
+                    <p>
+
+                        Report issues, organize campaigns,
+                        manage complaints and collaborate
+                        with your community.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="col-lg-4">
+
+                <div class="how-card h-100">
+
+                    <div class="step-number">
+
+                        03
+
+                    </div>
+
+                    <div class="how-icon">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Create Real Impact
+
+                    </h4>
+
+                    <p>
+
+                        Track progress, solve problems and
+                        work together towards cleaner,
+                        safer and smarter cities.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- GET STARTED -->
+
+        <div class="text-center how-start">
+
+            <h3 class="fw-bold">
+
+                Ready to make a difference?
+
+            </h3>
+
+            <p class="text-muted">
+
+                Join CivicConnect and become a part of
+                building a better community.
+
+            </p>
+
+            <a href="#roles"
+               class="btn btn-primary btn-lg px-5 fw-semibold">
+
+                Get Started
+
+                <i class="bi bi-arrow-right ms-2"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ROLE SECTION -->
+<div class="container my-5" id="roles">
+
+    <div class="text-center mb-5">
+
+        <span class="text-primary fw-semibold text-uppercase small">
+
+            One Platform
+
+        </span>
+
+        <h2 class="fw-bold mt-2">
+
+            Choose Your Role
+
+        </h2>
+
+        <p class="text-muted">
+
+            Select how you want to connect and contribute to your city.
+
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- CITIZEN -->
+
+        <div class="col-lg-4">
+
+            <div class="card role-card shadow">
+
+                <div class="card-body text-center">
+
+                    <div class="icon-wrapper citizen-icon">
+
+                        <i class="bi bi-person-circle"></i>
+
+                    </div>
+
+                    <h3 class="mt-4">
+
+                        Citizen
+
+                    </h3>
+
+                    <p class="text-muted">
+
+                        Report civic issues, track complaints,
+                        and volunteer for campaigns.
+
+                    </p>
+
+                    <a href="/citizen"
+                       class="btn btn-primary px-4">
+
+                        Continue
+
+                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NGO -->
+
+        <div class="col-lg-4">
+
+            <div class="card role-card shadow">
+
+                <div class="card-body text-center">
+
+                    <div class="icon-wrapper ngo-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+                    <h3 class="mt-4">
+
+                        NGO
+
+                    </h3>
+
+                    <p class="text-muted">
+
+                        Organize drives, manage volunteers,
+                        and collaborate with cities.
+
+                    </p>
+
+                    <a href="/ngo"
+                       class="btn btn-success px-4">
+
+                        Continue
+
+                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MUNICIPAL -->
+
+        <div class="col-lg-4">
+
+            <div class="card role-card shadow">
+
+                <div class="card-body text-center">
+
+                    <div class="icon-wrapper municipal-icon">
+
+                        <i class="bi bi-building"></i>
+
+                    </div>
+
+                    <h3 class="mt-4">
+
+                        Municipal Authority
+
+                    </h3>
+
+                    <p class="text-muted">
+
+                        Manage complaints, assign work,
+                        and monitor city performance.
+
+                    </p>
+
+                    <a href="/municipal"
+                       class="btn btn-dark px-4">
+
+                        Continue
+
+                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer class="bg-dark text-white text-center py-4">
+
+    <div class="container">
+
+        <div class="fw-bold mb-1">
+
+            <i class="bi bi-buildings-fill me-1"></i>
+
+            CivicConnect
+
+        </div>
+
+        <small class="text-white-50">
+
+            Connecting citizens, communities and authorities.
+
+        </small>
+
+        <div class="mt-2">
+
+            <small class="text-white-50">
+
+                © 2026 CivicConnect. All rights reserved.
+
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
